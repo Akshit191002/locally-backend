@@ -1,21 +1,19 @@
 const jwt=require("jsonwebtoken")
 require("dotenv").config();
 
-exports.auth=(req,res,next)=>{
-try{
+const auth=(req,res,next)=>{
 
-    //extract jwt token
-     const token=req.body.token;
-
-     if(!token){
-        res.json({
-            success:false,
-            message:"token missing"
-        })
-     }
-
-     //verify token
-     try{
+    //verify token
+    try{
+         //extract jwt token
+          const token=req.body.token;
+     
+          if(!token){
+             res.json({
+                 success:false,
+                 message:"token missing"
+             })
+          }
         const decode=jwt.verify(token,process.env.JWT_SECRET);
         console.log(decode);
 
@@ -29,17 +27,10 @@ try{
 
      }
      next();
-
     
-}catch(error){
-    res.json({
-        success:false,
-        message:"some thing went wrong"
-    })
-    next();
 
-    
 }
-}
+
+module.exports = auth;
 
 
